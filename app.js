@@ -34,7 +34,7 @@ function getProduct(query) {
         .then(function (body) {
             var data = body.data;
             for (var i = 0; i < data.length; i++) {
-                result += data[i].name + '\n';
+                result += data[i].name + ' - ' + parseInt(data[i].alcohol_content)/100 + '%\n';
             }
             return result
         });
