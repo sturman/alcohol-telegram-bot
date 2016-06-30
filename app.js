@@ -16,13 +16,14 @@ bot.onText(/\/find (.+)/, function (msg, match) {
 
 function getProduct(query) {
     var options = {
-        uri    : 'http://lcboapi.com/v2/products',
+        uri    : 'http://lcboapi.com/products',
         qs     : {
             per_page: 100,
             q       : query
         },
         headers: {
-            'authorization': 'Token token="' + apiToken + '"'
+            'authorization': 'Token token="' + apiToken + '"',
+            'accept'       : 'application/vnd.api+json'
         },
         json   : true
     };
