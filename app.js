@@ -8,7 +8,7 @@ var bot      = new TelegramBot(token, {polling: true});
 
 bot.onText(/\/find (.+)/, function (msg, match) {
     var fromId = msg.from.id;
-    var query  = match[1];
+    var query  = match[1].replace(' ', '+');
     getProduct(query).then(function (result) {
         bot.sendMessage(fromId, result);
     });
@@ -34,7 +34,7 @@ function getProduct(query) {
         .then(function (body) {
             var data = body.data;
             for (var i = 0; i < data.length; i++) {
-                result += data[i].name + ' - ' + parseInt(data[i].alcohol_content)/100 + '%\n';
+                result += data[i].name + ' - ' + parseInt(data[i].alcohol_content) / 100 + '%\n';
             }
             return result
         });
