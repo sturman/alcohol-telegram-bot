@@ -1,0 +1,12 @@
+{
+  "name"        : "alcohol-telegram-bot",
+  "version"     : "0.0.1",
+  "private"     : true,
+  "scripts"     : {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "~0.23.3",
+    "request-promise"      : "~3.0.0"
+  }
+}
