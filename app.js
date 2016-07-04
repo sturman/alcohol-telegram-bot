@@ -10,8 +10,19 @@ bot.onText(/\/find (.+)/, function (msg, match) {
     var fromId = msg.from.id;
     var query  = match[1].replace(' ', '+');
     getProduct(query).then(function (result) {
-        bot.sendMessage(fromId, result);
+        var but      = {text: '1'};
+        var keyboard = {
+            keyboard         : [[but, but],
+                                [but]],
+            one_time_keyboard: true
+        };
+        bot.sendMessage(fromId, result, {reply_markup: JSON.stringify(keyboard)});
     });
+});
+
+bot.onText(/^\d+$/, function (msg, match) {
+    var fromId = msg.from.id;
+    bot.sendMessage(fromId, msg.text, {reply_markup: JSON.stringify({hide_keyboard: true})});
 });
 
 function getProduct(query) {
@@ -34,7 +45,7 @@ function getProduct(query) {
         .then(function (body) {
             var data = body.data;
             for (var i = 0; i < data.length; i++) {
-                result += data[i].name + ' - ' + parseInt(data[i].alcohol_content) / 100 + '%\n';
+                result += i + 1 + '. ' + data[i].name + ' - ' + parseInt(data[i].alcohol_content) / 100 + '%\n';
             }
             return result
         });
