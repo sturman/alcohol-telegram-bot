@@ -13,12 +13,16 @@ bot.onText(/\/find (.+)/, function (msg, match) {
     var fromId = msg.chat.id;
     var query  = match[1].replace(' ', '+');
     getProduct(query).then(function (data) {
-        products   = data;
-        var result = '';
-        for (var i = 0; i < data.length; i++) {
-            result += '/' + (i + 1) + '. ' + data[i].name + ' - ' + parseInt(data[i].alcohol_content) / 100 + '%\n';
+        products = data;
+        if (data.length == 0) {
+            bot.sendMessage(fromId, "Sorry, no results found.");
+        } else {
+            var result = '';
+            for (var i = 0; i < data.length; i++) {
+                result += '/' + (i + 1) + '. ' + data[i].name + ' - ' + parseInt(data[i].alcohol_content) / 100 + '%\n';
+            }
+            bot.sendMessage(fromId, result);
         }
-        bot.sendMessage(fromId, result);
     });
 });
 
