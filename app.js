@@ -23,26 +23,31 @@ bot.onText(/\/find (.+)/, function (msg, match) {
 });
 
 bot.onText(/\/\d+$/, function (msg, match) {
-    var id     = match[0].replace('/', '');
-    var fromId = msg.from.id;
-    getProductDescription(products[id - 1].id).then(function (data) {
+    var id        = match[0].replace('/', '');
+    var fromId    = msg.from.id;
+    var productId = products[id - 1].id;
+    if (productId != null) {
+        getProductDescription(productId).then(function (data) {
 
-        var download = function (uri, filename, callback) {
-            request.head(uri, function (err, res, body) {
-                request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-            });
-        };
+            var download = function (uri, filename, callback) {
+                request.head(uri, function (err, res, body) {
+                    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+                });
+            };
 
-        var imageUrl = data.image_url;
-        if (imageUrl != null) {
-            download(imageUrl, './file.png', function () {
-                console.log('done');
-                bot.sendPhoto(fromId, './file.png');
-            });
-        } else {
-            bot.sendMessage(fromId, "Unfortunately, we do not have an image for " + data.name);
-        }
-    });
+            var imageUrl = data.image_url;
+            if (imageUrl != null) {
+                download(imageUrl, './file.png', function () {
+                    console.log('done');
+                    bot.sendPhoto(fromId, './file.png');
+                });
+            } else {
+                bot.sendMessage(fromId, "Unfortunately, we do not have an image for " + data.name);
+            }
+        });
+    } else {
+        bot.sendMessage(fromId, "Please use command /find first, e.g. /find Jose Cuervo");
+    }
 });
 
 function getProduct(query) {
