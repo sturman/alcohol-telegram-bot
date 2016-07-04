@@ -10,7 +10,7 @@ var bot      = new TelegramBot(token, {polling: true});
 var products;
 
 bot.onText(/\/find (.+)/, function (msg, match) {
-    var fromId = msg.from.id;
+    var fromId = msg.chat.id;
     var query  = match[1].replace(' ', '+');
     getProduct(query).then(function (data) {
         products   = data;
@@ -24,7 +24,7 @@ bot.onText(/\/find (.+)/, function (msg, match) {
 
 bot.onText(/\/\d+$/, function (msg, match) {
     var id        = match[0].replace('/', '');
-    var fromId    = msg.from.id;
+    var fromId    = msg.chat.id;
     var productId = products[id - 1].id;
     if (productId != null) {
         getProductDescription(productId).then(function (data) {
