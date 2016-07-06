@@ -66,7 +66,7 @@ bot.onText(/\/\d+$/, function (msg, match) {
             var imageUrl = data.image_url;
             if (imageUrl != null) {
                 download(imageUrl, './file.png', function () {
-                    console.log('done');
+                    console.log(new Date() + ' done');
                     bot.sendPhoto(fromId, './file.png');
                 });
             } else {
