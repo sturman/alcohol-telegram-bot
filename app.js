@@ -7,6 +7,7 @@ var apiToken = '';
 // Setup polling way
 var bot      = new TelegramBot(token, {polling: true});
 
+var productData;
 var products;
 
 bot.onText(/\/find (.+)/, function (msg, match) {
@@ -32,7 +33,7 @@ bot.onText(/\/\d+$/, function (msg, match) {
     var productId = products[id - 1].id;
     if (productId != null) {
         getProductDescription(productId).then(function (data) {
-
+            productData  = data;
             var download = function (uri, filename, callback) {
                 request.head(uri, function (err, res, body) {
                     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
@@ -44,6 +45,7 @@ bot.onText(/\/\d+$/, function (msg, match) {
                 download(imageUrl, './file.png', function () {
                     console.log('done');
                     bot.sendPhoto(fromId, './file.png');
+                    bot.sendMessage(fromId, "You may request more details by send command /more")
                 });
             } else {
                 bot.sendMessage(fromId, "Unfortunately, we do not have an image for " + data.name);
@@ -52,6 +54,22 @@ bot.onText(/\/\d+$/, function (msg, match) {
     } else {
         bot.sendMessage(fromId, "Please use command /find first, e.g. /find Jose Cuervo");
     }
+});
+
+bot.onText(/\/more/, function (msg, match) {
+    var fromId          = msg.chat.id;
+    var origin          = productData.origin;
+    var primaryCategory = productData.primary_category;
+    var producerName    = productData.producer_name;
+    var prodPackage     = productData.package;
+    var packageUnitType = productData.package_unit_type;
+
+    var info = "Country of origin / manufacture - " + origin + "\n" +
+               "Primary product category - " + primaryCategory + "\n" +
+               "Company that produces the product - " + producerName + "\n" +
+               "Full package description - " + prodPackage + "\n" +
+               "Package unit type - " + packageUnitType;
+    bot.sendMessage(fromId, info);
 });
 
 function getProduct(query) {
