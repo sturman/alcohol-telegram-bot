@@ -10,11 +10,11 @@ var bot      = new TelegramBot(token, {polling: true});
 var products;
 
 bot.onText(/\/start/, function (msg, match) {
-    var fromId    = msg.chat.id;
-    var firstName = msg.user.first_name;
-    welcomeMsg    = "Hello " + firstName + "!\n" +
-                    "I can try to find a short description and picture of any alcohol product\n" +
-                    "Just send me command /find <product_name>, e.g. /find heineken";
+    var fromId     = msg.chat.id;
+    var firstName  = msg.user.first_name;
+    var welcomeMsg = "Hello " + firstName + "!\n" +
+                     "I can try to find a short description and picture of any alcohol product\n" +
+                     "Just send me command /find <product_name>, e.g. /find heineken";
     bot.sendMessage(fromId, welcomeMsg);
 });
 
