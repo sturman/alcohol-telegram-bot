@@ -74,9 +74,9 @@ bot.onText(/\/\d+$/, function (msg, match) {
 
             var imageUrl = data.image_url;
             if (imageUrl != null) {
-                download(imageUrl, './file.png', function () {
+                download(imageUrl, process.cwd() + '/file.png', function () {
                     console.log(new Date() + ' done');
-                    bot.sendPhoto(fromId, './file.png');
+                    bot.sendPhoto(fromId, process.cwd() + '/file.png');
                 });
             } else {
                 bot.sendMessage(fromId, "Unfortunately, we do not have an image for " + data.name);
