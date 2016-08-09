@@ -2,8 +2,8 @@ var TelegramBot = require('node-telegram-bot-api');
 var request     = require('request-promise');
 var fs          = require('fs');
 
-var token    = '';
-var apiToken = '';
+var token    = process.env.ALC_TG_TOKEN;
+var apiToken = process.env.ALC_API_TOKEN;
 // Setup polling way
 var bot      = new TelegramBot(token, {polling: true});
 
