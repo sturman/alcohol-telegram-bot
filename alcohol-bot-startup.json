@@ -1,0 +1,13 @@
+[
+  {
+    "script"   : "app.js",
+    "name"     : "alcohol-telegram-bot",
+    "exec_mode": "fork",
+    "instances": -1,
+    "watch"    : true,
+    "env"      : {
+      "BOT_TOKEN" : "",
+      "LSBO_TOKEN": ""
+    }
+  }
+]
