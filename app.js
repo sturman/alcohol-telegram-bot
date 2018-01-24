@@ -1,15 +1,17 @@
 const Telegraf = require('telegraf')
 const rp       = require('request-promise')
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot      = new Telegraf(process.env.BOT_TOKEN)
 const apiToken = process.env.LSBO_TOKEN
 
 bot.telegram.getMe().then((botInfo) => {
   bot.options.username = botInfo.username
 })
 
-bot.command('start', ({ from: { username, first_name }, reply }) => {
-  reply(`Hello ${first_name}! \n` +
+bot.start(ctx => {
+  console.log('started:', ctx.from)
+  let firstName = ctx.from.first_name
+  ctx.reply(`Hello ${firstName}! \n` +
     `I can try to find a short description and picture of any alcohol product\n` +
     `Just send me command /f <product_name>, e.g. /f heineken`)
 })
