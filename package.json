@@ -3,11 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "./node_modules/.bin/nodemon app.js"
   },
   "dependencies": {
     "telegraf": "~3.17.x",
     "request-promise": "~4.2.x",
     "request": "^2.83.x"
+  },
+  "devDependencies": {
+    "dotenv": "^4.x",
+    "nodemon": "^1.14.x"
   }
 }

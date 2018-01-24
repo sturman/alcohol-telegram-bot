@@ -1,5 +1,6 @@
 const Telegraf = require('telegraf')
 const rp       = require('request-promise')
+require('dotenv').config()
 
 const bot      = new Telegraf(process.env.BOT_TOKEN)
 const apiToken = process.env.LSBO_TOKEN
