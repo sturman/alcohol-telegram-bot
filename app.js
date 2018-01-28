@@ -19,36 +19,26 @@ bot.start(ctx => {
     `Just send me command /f <product_name>, e.g. /f heineken`)
 })
 
-bot.command('prod', ctx => {
-  let options = {
-    baseUrl: 'https://lcboapi.com',
-    url: 'products',
-    qs: {
-      access_key: lcboApiKey,
-      where_not: 'is_dead'
-    },
-    json: true
-  }
+let requestOptions = {
+  baseUrl: 'https://lcboapi.com',
+  url: 'products',
+  qs: {
+    access_key: lcboApiKey,
+    where_not: 'is_dead',
+  },
+  json: true
+}
 
-  rp(options)
+bot.command('prod', ctx => {
+  rp(requestOptions)
     .then(resp => {
       ctx.reply(`Output contains ${resp.pager.total_record_count} products`)
     })
 })
 
 bot.hears(/find (.+)/, (ctx) => {
-  let options = {
-    baseUrl: 'https://lcboapi.com',
-    url: 'products',
-    qs: {
-      access_key: lcboApiKey,
-      where_not: 'is_dead',
-      q: ctx.match[1]
-    },
-    json: true
-  }
-
-  rp(options)
+  requestOptions.qs.q = ctx.match[1]
+  rp(requestOptions)
     .then(resp => {
       ctx.reply(`Output ${resp.pager.total_record_count} products for query ${ctx.match[1]}`)
     })
