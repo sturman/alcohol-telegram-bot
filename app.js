@@ -1,9 +1,9 @@
 const Telegraf = require('telegraf')
-const rp       = require('request-promise')
+const rp = require('request-promise')
 require('dotenv').config()
 
-const bot      = new Telegraf(process.env.BOT_TOKEN)
-const apiToken = process.env.LSBO_TOKEN
+const bot = new Telegraf(process.env.BOT_TOKEN)
+const lcboApiKey = process.env.LCBO_API_KEY
 
 bot.telegram.getMe().then((botInfo) => {
   bot.options.username = botInfo.username
