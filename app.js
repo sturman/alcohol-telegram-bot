@@ -32,15 +32,20 @@ let requestOptions = {
 bot.command('prod', ctx => {
   rp(requestOptions)
     .then(resp => {
-      ctx.reply(`Output contains ${resp.pager.total_record_count} products`)
+      return ctx.reply(`Found ${resp.pager.total_record_count} products`)
     })
 })
 
 bot.hears(/find (.+)/, (ctx) => {
-  requestOptions.qs.q = ctx.match[1]
+  let searchQuery = ctx.match[1]
+  if (searchQuery.length < 3) {
+    return ctx.reply(`${searchQuery.length} is too short query length to perform a search.\nPlease provide at least 3 chars`)
+  }
+  requestOptions.qs.q = searchQuery
   rp(requestOptions)
     .then(resp => {
-      ctx.reply(`Output ${resp.pager.total_record_count} products for query ${ctx.match[1]}`)
+      console.log(resp)
+      return ctx.replyWithMarkdown(`Found ${resp.pager.total_record_count} products for query \`${searchQuery}\``)
     })
 })
 
