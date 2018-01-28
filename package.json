@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "telegraf": "~3.17.x",
-    "request-promise": "~4.2.x",
+    "request-promise-native": "~1.0.x",
     "request": "^2.83.x"
   },
   "devDependencies": {

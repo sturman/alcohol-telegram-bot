@@ -1,5 +1,5 @@
 const Telegraf = require('telegraf')
-const rp = require('request-promise')
+const rp = require('request-promise-native')
 require('dotenv').config()
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
@@ -15,6 +15,23 @@ bot.start(ctx => {
   ctx.reply(`Hello ${firstName}! \n` +
     `I can try to find a short description and picture of any alcohol product\n` +
     `Just send me command /f <product_name>, e.g. /f heineken`)
+})
+
+bot.command('prod', ctx => {
+  let options = {
+    baseUrl: 'https://lcboapi.com',
+    url: 'products',
+    qs: {
+      access_key: lcboApiKey,
+      where_not: 'is_dead'
+    },
+    json: true
+  }
+
+  rp(options)
+    .then(resp => {
+      ctx.reply(`Output contains ${resp.pager.total_record_count} products`)
+    })
 })
 
 bot.startPolling()
