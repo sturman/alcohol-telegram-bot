@@ -34,6 +34,24 @@ bot.command('prod', ctx => {
     })
 })
 
+bot.hears(/find (.+)/, (ctx) => {
+  let options = {
+    baseUrl: 'https://lcboapi.com',
+    url: 'products',
+    qs: {
+      access_key: lcboApiKey,
+      where_not: 'is_dead',
+      q: ctx.match[1]
+    },
+    json: true
+  }
+
+  rp(options)
+    .then(resp => {
+      ctx.reply(`Output ${resp.pager.total_record_count} products for query ${ctx.match[1]}`)
+    })
+})
+
 bot.startPolling()
 
 // bot.onText(/\/find (.+)/, function (msg, match) {
