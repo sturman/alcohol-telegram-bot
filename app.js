@@ -9,6 +9,8 @@ bot.telegram.getMe().then((botInfo) => {
   bot.options.username = botInfo.username
 })
 
+bot.use(Telegraf.log())
+
 bot.start(ctx => {
   console.log('started:', ctx.from)
   let firstName = ctx.from.first_name
