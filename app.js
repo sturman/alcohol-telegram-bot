@@ -1,5 +1,5 @@
 var TelegramBot = require('node-telegram-bot-api');
-var request     = require('request-promise');
+const request     = require('request-promise');
 const fs          = require('fs');
 
 var token    = process.env.BOT_TOKEN;
